@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Yodlr Admin Page</title>
+</head>
+<body>
+  <h1>Yodlr Admin Page</h1>
+  <table id="users-table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- user data will be dynamically added here -->
+    </tbody>
+  </table>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    axios.get('/users')
+      .then(response => {
+        // handle success response
+        const users = response.data;
+        const tableBody = document.querySelector('#users-table tbody');
+        users.forEach(user => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${user.firstname}</td>
+            <td>${user.lastname}</td>
+            <td>${user.email}</td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      })
+      .catch(error => {
+        // handle error response
+        console.log(error);
+      });
+  </script>
+</body>
+</html>
